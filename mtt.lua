@@ -27,5 +27,9 @@ mtt.register("metadata check", function(callback)
     local t = meta:to_table()
     assert(t and t.fields and t.fields.x == "456")
 
+    -- technic_cnc issue: set empty string and expect nil from "get"
+    meta:set_string("x", "")
+    assert(meta:get("x") == nil)
+
     callback()
 end)

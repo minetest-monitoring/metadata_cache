@@ -37,7 +37,13 @@ end
 local function create_setter(meta, setter, getter, value_cache)
     return function(_, key, value)
         setter(meta, key, value)
-        value_cache[key] = getter(meta, key)
+        if value == "" then
+            -- clear data
+            value_cache[key] = nil
+        else
+            -- read back from engine
+            value_cache[key] = getter(meta, key)
+        end
     end
 end
 
@@ -46,7 +52,7 @@ local function create_meta_proxy(pos)
     local data = {}
 
     return {
-        get = create_getter(meta, meta.get_string, data),
+        get = create_getter(meta, meta.get, data, "string"),
         get_string = create_getter(meta, meta.get_string, data, "string"),
         set_string = create_setter(meta, meta.set_string, meta.get_string, data),
         get_int = create_getter(meta, meta.get_int, data, "number"),
