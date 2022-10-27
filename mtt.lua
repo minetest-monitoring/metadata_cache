@@ -13,5 +13,19 @@ mtt.register("metadata check", function(callback)
     meta:set_int("x", 1)
     assert(meta:get_string("x") == "1")
 
+    -- clear and expect empty string
+    meta:set_string("x", nil)
+    assert(meta:get_string("x") == "")
+
+    -- set, clear and expect empty string
+    meta:set_string("x", "something")
+    meta:from_table({})
+    assert(meta:get_string("x") == "")
+
+    -- set int and check returned table
+    meta:set_int("x", 456)
+    local t = meta:to_table()
+    assert(t and t.fields and t.fields.x == "456")
+
     callback()
 end)

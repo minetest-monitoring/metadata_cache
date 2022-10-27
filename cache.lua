@@ -64,7 +64,10 @@ local function create_meta_proxy(pos)
         end,
         from_table = function(_, t)
             meta:from_table(t)
-            data = {}
+            -- invalidate all entries
+            for k in pairs(data) do
+                data[k] = nil
+            end
         end,
         get_inventory = function()
             return meta:get_inventory()
