@@ -63,17 +63,17 @@ local function create_meta_proxy(pos)
             return meta:to_table()
         end,
         from_table = function(_, t)
-            meta:from_table(t)
             -- invalidate all entries
             for k in pairs(data) do
                 data[k] = nil
             end
+            return meta:from_table(t)
         end,
         get_inventory = function()
             return meta:get_inventory()
         end,
         mark_as_private = function(_, key)
-            meta:mark_as_private(key)
+            return meta:mark_as_private(key)
         end,
         equals = function(other)
             return meta:equals(other)

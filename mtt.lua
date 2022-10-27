@@ -19,7 +19,7 @@ mtt.register("metadata check", function(callback)
 
     -- set, clear and expect empty string
     meta:set_string("x", "something")
-    meta:from_table({})
+    assert(meta:from_table({}))
     assert(meta:get_string("x") == "")
 
     -- set int and check returned table
