@@ -1,7 +1,7 @@
 local has_monitoring_mod = minetest.get_modpath("monitoring")
 
-local hit_count = function() end
-local miss_count = function() end
+local hit_count = { inc = function() end }
+local miss_count = { inc = function() end }
 
 if has_monitoring_mod then
   hit_count = monitoring.counter("metadata_cache_hit", "cache hits")
@@ -86,4 +86,9 @@ function minetest.get_meta(pos)
     end
 
     return cache[hash]
+end
+
+local MP = minetest.get_modpath("metadata_cache")
+if minetest.get_modpath("mtt") then
+    dofile(MP .. "/mtt.lua")
 end

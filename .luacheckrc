@@ -14,5 +14,5 @@ read_globals = {
 	"Settings", "vector",
 
 	-- deps
-	"monitoring"
+	"monitoring", "mtt"
 }
