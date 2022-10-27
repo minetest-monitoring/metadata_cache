@@ -34,8 +34,11 @@ local function create_getter(meta, accessor, value_cache)
     end
 end
 
-local function create_setter(meta, accessor, value_cache)
+local function create_setter(meta, accessor, value_cache, coerce_number)
     return function(_, key, value)
+        if coerce_number then
+            value = tonumber(value)
+        end
         accessor(meta, key, value)
         value_cache[key] = value
     end
@@ -50,9 +53,9 @@ local function create_meta_proxy(pos)
         get_string = create_getter(meta, meta.get_string, data),
         set_string = create_setter(meta, meta.set_string, data),
         get_int = create_getter(meta, meta.get_int, data),
-        set_int = create_setter(meta, meta.set_int, data),
+        set_int = create_setter(meta, meta.set_int, data, true),
         get_float = create_getter(meta, meta.get_float, data),
-        set_float = create_setter(meta, meta.set_float, data),
+        set_float = create_setter(meta, meta.set_float, data, true),
         contains = function(key)
             if data[key] then
                 return true
