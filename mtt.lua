@@ -7,6 +7,11 @@ mtt.register("metadata check", function(callback)
 
     -- set string and get int
     meta:set_string("x", "123")
-    print(dump(meta:get_int("x")))
     assert(meta:get_int("x") == 123)
+
+    -- set int and get string
+    meta:set_int("x", 1)
+    assert(meta:get_string("x") == "1")
+
+    callback()
 end)
