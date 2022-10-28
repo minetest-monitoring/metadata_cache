@@ -31,5 +31,15 @@ mtt.register("metadata check", function(callback)
     meta:set_string("x", "")
     assert(meta:get("x") == nil)
 
+    -- perf test
+    local t1 = minetest.get_us_time()
+    local count = 1000 * 1000
+    for _ = 1,count do
+        meta:get("x")
+    end
+    local t2 = minetest.get_us_time()
+    local micros = t2 - t1
+    print("executed " .. count .. " iterations in " .. math.floor(micros/1000) .. " ms")
+
     callback()
 end)
